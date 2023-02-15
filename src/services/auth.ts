@@ -1,7 +1,11 @@
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+
+import config from '../config';
 import getUser from '../database/read';
 import addUser from '../database/write';
+
 import { errorHandler } from '../routes/middlewares/error';
 
 export async function getIndex(req: Request,res: Response){
@@ -23,7 +27,15 @@ export async function postSignin(req: Request,res: Response){
 		}
 		const isPasswordSame = await bcrypt.compare(password, user.password);
 		if(isPasswordSame){
-			res.sendStatus(200);
+			const token = jwt.sign({
+				sub: name,
+				admin: false,
+				roles: ['user']
+			},
+			config.JWTSECRET!
+			);
+			res.cookie('sessionToken',token);
+			res.redirect('/');
 			return;
 		}
 		else{

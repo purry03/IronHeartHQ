@@ -1,6 +1,9 @@
 import express from 'express';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import { authExtract } from './routes/middlewares/auth';
+
 
 import path from 'node:path';
 
@@ -19,6 +22,8 @@ app.use(helmet());  // obscure headers for security
 app.use('/static', express.static(path.join(__dirname,'..','/public'))); // set static directory
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(authExtract);
 app.use(router.v0); // use v0 routes
 
 app.listen(config.PORT || 80,()=>{

@@ -2,6 +2,7 @@
 
 *{
     font-family: 'Source Sans Pro', sans-serif;
+    box-sizing: border-box;
 }
 
 input{
@@ -22,6 +23,6 @@ button{
     background-color: darkgrey;
     display: flex;
     align-items: center;
-    padding-left: 10px;
-    padding-right: 10px;
+    justify-content: space-between;
+    padding: 0 10px;
 }

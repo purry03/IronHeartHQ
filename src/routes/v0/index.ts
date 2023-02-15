@@ -1,5 +1,8 @@
 import express from 'express';
 import * as auth from '../../services/auth';
+import * as user from '../../services/user';
+import { requireUserAuth } from '../middlewares/auth';
+
 const router = express.Router();
 
 router.get('/auth',(req,res)=>{
@@ -20,6 +23,10 @@ router.get('/auth/register',(req,res)=>{
 
 router.post('/auth/register',(req,res)=>{
 	auth.postRegister(req,res);
+});
+
+router.get('/', requireUserAuth ,(req,res)=> {
+	user.getIndex(req,res);
 });
 
 export default router;
