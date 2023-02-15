@@ -10,6 +10,10 @@ router.get('/auth/signin',(req,res)=>{
 	auth.getSignin(req,res);
 });
 
+router.post('/auth/signin',(req,res)=>{
+	auth.postSignin(req,res);
+});
+
 router.get('/auth/register',(req,res)=>{
 	auth.getRegister(req,res);
 });
