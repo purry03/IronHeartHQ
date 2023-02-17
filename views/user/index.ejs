@@ -13,10 +13,25 @@
 </head>
 
 <body>
+    <%- include('../partials/navbar.ejs') %>
+
     <div id="main">
-        <%- include('../partials/footer.ejs') %>
+        <h3 class="heading">Announcements</h3>
+        <div class="announcements-wrapper">
+            <div class="announcement"><p class="announcement-date">[ 17 Feb 2023 ]</p><p class="announcement-issuer">[ CMDR Admiral Smith ] :</p><p class="announcement-text">Payouts have been suspended till Feb 20, 2023. All payouts in queue will be put on hold.</p></div>
+            <div class="announcement"><p class="announcement-date">[ 16 Feb 2023 ]</p><p class="announcement-issuer">[ CMDR Admiral Smith ] :</p><p class="announcement-text">All fleet carriers are required to be deployed to Lajit for the war.</p></div>
+            <div class="announcement"><p class="announcement-date">[ 15 Feb 2023 ]</p><p class="announcement-issuer">[ CMDR Contum ( DEV ) ] :</p><p class="announcement-text">Website will undergo maintenance on Feb 18. WIll be down for 60 mins.</p></div>
+            <div class="announcement"><p class="announcement-date">[ 10 Feb 2023 ]</p><p class="announcement-issuer">[ CMDR Archangel-Zero02  ] :</p><p class="announcement-text">New fleet carrier - IHCF-REVELATIONS is deployed and stationed in HIP 64714.</p></div>
+        </div>
+        <hr>
+        <h3 class="heading" style="margin-top: 25px;">Fleet Carriers</h3>
+
     </div>
 
+    <%- include('../partials/footer.ejs') %>
+
+
+    <script src="/static/js/fontawesome.js"></script>
     <script src="" async defer></script>
 </body>
 
