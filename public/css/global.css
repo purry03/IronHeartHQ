@@ -28,6 +28,7 @@ button{
     align-items: center;
     border-bottom: 1px solid rgba(0,0,0,0.25);
     padding-right: 10px;
+    background-color: white;
 }
 
 #navbar h3{
@@ -43,6 +44,10 @@ button{
 
 #navbar h4{
     margin-left: auto;
+}
+
+#navbar #logout-button{
+    cursor: pointer;
 }
 
 #footer{
@@ -61,11 +66,18 @@ button{
 
 #main{
     padding: 100px 50px;
+    padding-bottom: 1000px;
     height: 100%;
 }
 
 .heading{
     font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+.subheading{
+    font-size: 1.1rem;
     font-weight: 400;
     margin: 0;
 }

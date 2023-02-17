@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <%- include('../partials/navbar.ejs') %>
+    <%- include('../partials/navbar.ejs', {user}) %>
 
     <div id="main">
         <h3 class="heading">Announcements</h3>
@@ -24,15 +24,72 @@
             <div class="announcement"><p class="announcement-date">[ 10 Feb 2023 ]</p><p class="announcement-issuer">[ CMDR Archangel-Zero02  ] :</p><p class="announcement-text">New fleet carrier - IHCF-REVELATIONS is deployed and stationed in HIP 64714.</p></div>
         </div>
         <hr>
+        <h3 class="heading" style="margin-top: 25px;">IHCF Wallet</h3>
+        <h1 id="wallet-balance">160,000,000 CR</h1>
+        <a href="#"><h3 id="transaction-history">View Transaction History</h3></a> 
+        <h4 class="subheading">Payout</h4>
+        <div id="wallet-buttons-wrapper">
+            <form style="margin-top: 15px;">
+                <input type="text" placeholder="payout amount">
+                <button type="submit">Request Payout</button>
+            </form>
+        </div>
+        <hr>
         <h3 class="heading" style="margin-top: 25px;">Fleet Carriers</h3>
-
+        <div class="carriers-wrapper">
+            <div class="carrier">
+                <h3>IHCF REVELATIONS</h3>
+                <h5>Current System: HIP 64714</h5>
+                <p>Primary purpose will be for support at home, BGS, and black market trading.</p>
+            </div>
+            <div class="carrier">
+                <h3>IHCF BATTLE OF NASSAU</h3>
+                <h5>Current System: LTT 5748</h5>
+                <p>Primary purpose will be for support at home, BGS, and black market trading.</p>
+            </div>
+            <div class="carrier">
+                <h3>IHCF CHAOS GATE</h3>
+                <h5>Current System: Sol</h5>
+                <p>Primary purpose will be for support at home, BGS, and black market trading.</p>
+            </div>
+            <div class="carrier">
+                <h3>IHCF FREEDOM FLAGSHIP</h3>
+                <h5>Current System: Lajit</h5>
+                <p>Primary purpose will be for support at home, BGS, and bounty hunting carrier missions.</p>
+            </div>
+            <div class="carrier">
+                <h3>IHCF MINERS RESPITE</h3>
+                <h5>Current System: HIP 64714</h5>
+                <p>Primary purpose will be for support at home, long range mining, commodity trading.</p>
+            </div>
+            <div class="carrier">
+                <h3>IHCF VINDICATOR</h3>
+                <h5>Current System: Mariphobo</h5>
+                <p>Primary purpose will be for support at home, BGS, and black market trading.</p>
+            </div>
+            <div class="carrier">
+                <h3>THE SHINING LARRAS</h3>
+                <h5>Current System: Kamocadroa</h5>
+                <p>Primary purpose will be for support at home, community goal focus, commodity trading. </p>
+            </div>
+            <div class="carrier">
+                <h3>IHCF MINERS RESPITE</h3>
+                <h5>Current System: Khondo Po</h5>
+                <p>Primary purpose will be for support at home, BGS, and black market trading.</p>
+            </div>
+            <div class="carrier">
+                <h3>IHCF EAGLE ONE</h3>
+                <h5>Current System: Ngakwilo</h5>
+                <p>Primary purpose will be for support at home, BGS, and black market trading.</p>
+            </div>
+        </div>
     </div>
 
     <%- include('../partials/footer.ejs') %>
 
 
     <script src="/static/js/fontawesome.js"></script>
-    <script src="" async defer></script>
+    <script src="/static/js/global.js" async defer></script>
 </body>
 
 </html>
