@@ -25,7 +25,7 @@
         </div>
         <hr>
         <h3 class="heading" style="margin-top: 25px;">IHCF Wallet</h3>
-        <h1 id="wallet-balance">160,000,000 CR</h1>
+        <h1 id="wallet-balance"><%=user.balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%> CR</h1>
         <a href="#"><h3 id="transaction-history">View Transaction History</h3></a> 
         <h4 class="subheading">Payout</h4>
         <div id="wallet-buttons-wrapper">

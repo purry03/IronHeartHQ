@@ -10,10 +10,11 @@ export async function authExtract(req: Request, res: Response, next: NextFunctio
 		req.user = null;
 	}
 	else{
-		const token = await jwt.verify(sessionToken,config.JWTSECRET!) as {sub:string,admin:boolean,roles: string[]};
+		const token = await jwt.verify(sessionToken,config.JWTSECRET!) as {sub:string,admin:boolean,dev:boolean,roles: string[]};
 		req.user = {
 			name: token.sub,
 			admin: token.admin,
+			dev: token.dev,
 			roles: token.roles
 		};
 	}	
@@ -32,5 +33,20 @@ export async function requireUserAuth(req: Request, res: Response, next: NextFun
 	else{
 		// redirect to login page
 		res.redirect('/auth/signin');
+	}
+}
+
+export async function requireDevAuth(req: Request, res: Response, next: NextFunction) {
+	if(req.user != null){
+		if(req.user.roles.includes('dev')){
+			next();
+		}
+		else{
+			res.redirect('/auth/dev');
+		}
+	}
+	else{
+		// redirect to login page
+		res.redirect('/auth/dev');
 	}
 }

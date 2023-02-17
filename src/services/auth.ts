@@ -30,7 +30,8 @@ export async function postSignin(req: Request,res: Response){
 			const token = jwt.sign({
 				sub: name,
 				admin: false,
-				roles: ['user']
+				dev: false,
+				roles: user.roles
 			},
 			config.JWTSECRET!
 			);
@@ -65,6 +66,34 @@ export async function postRegister(req: Request,res: Response){
 		const hashedPassword = await bcrypt.hash(password,10);
 		await addUser(name, hashedPassword);
 		res.sendStatus(200);
+	}
+	catch(err){
+		errorHandler(req,res,err);
+	}
+}
+
+export async function getDev(req: Request,res: Response){
+	res.render('auth/dev');
+}
+
+export async function postDev(req: Request,res: Response){
+	try{
+		const {username,password} = req.body;
+		if(config.DEVUSER === username && config.DEVPASS === password){
+			const token = jwt.sign({
+				sub: username,
+				admin: false,
+				dev: true,
+				roles: ['dev']
+			},
+			config.JWTSECRET!
+			);
+			res.cookie('sessionToken',token);
+			res.redirect('/dev');
+		}
+		else{
+			res.redirect('/auth/dev');
+		}
 	}
 	catch(err){
 		errorHandler(req,res,err);

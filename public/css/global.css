@@ -43,11 +43,33 @@ button{
 }
 
 #navbar h4{
-    margin-left: auto;
+    margin-left: 25px;
 }
 
 #navbar #logout-button{
     cursor: pointer;
+}
+
+#navbar ul{
+   margin-left: auto; 
+   margin-right: 25px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap:20px;
+}
+
+#navbar li{
+    list-style-type: none;
+}
+
+#navbar li a{
+    color: inherit;
+    text-decoration: inherit;
+}
+
+#navbar li a:hover{
+    text-decoration:underline;
 }
 
 #footer{
@@ -66,7 +88,6 @@ button{
 
 #main{
     padding: 100px 50px;
-    padding-bottom: 1000px;
     height: 100%;
 }
 

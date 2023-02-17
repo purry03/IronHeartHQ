@@ -11,6 +11,7 @@ import path from 'node:path';
 import config from './config';
 import logger from './utils/logger';
 import router from './routes/';
+import { notFoundHandler } from './routes/middlewares/error';
 
 const app = express();
 
@@ -30,6 +31,20 @@ app.use(cookieParser());
 app.use(authExtract);
 app.use(router.v0); // use v0 routes
 
+// Since this is the last non-error-handling
+// middleware used, we assume 404, as nothing else
+// responded.
+
+app.use(notFoundHandler);
+
 app.listen(config.PORT || 80,()=>{
 	logger.info(`server online on port ${config.PORT}`);
 });
+
+process
+	.on('unhandledRejection', (reason, p) => {
+		logger.error(reason, 'Unhandled Rejection at Promise', p);
+	})
+	.on('uncaughtException', err => {
+		logger.error(err, 'Uncaught Exception thrown');
+	});

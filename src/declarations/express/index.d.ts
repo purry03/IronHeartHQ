@@ -4,6 +4,7 @@ declare namespace Express {
         user:{
             name: string,
             admin: boolean,
+            dev: boolean,
             roles: string[],
         } | null
     }

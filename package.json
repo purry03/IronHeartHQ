@@ -22,6 +22,7 @@
     "@types/express-minify": "^0.1.35",
     "@types/helmet": "^4.0.0",
     "@types/jsonwebtoken": "^9.0.1",
+    "@types/log4js": "^2.3.5",
     "@types/pg": "^8.6.6",
     "@types/uid-safe": "^2.1.2",
     "bcrypt": "^5.1.0",

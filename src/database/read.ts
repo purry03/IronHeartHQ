@@ -1,4 +1,4 @@
-import { User } from '../declarations/types';
+import { User } from '../declarations';
 import database from './index';
 
 export default async function getUser(name: string): Promise<User>{

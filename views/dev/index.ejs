@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IronHeartHQ</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/normalizer.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+    <link rel="stylesheet" href="/static/css/dev/index.css">
+</head>
+
+<body>
+    <%- include('../partials/navbar.ejs') %>
+    <div id="main">
+        <h3 class="heading">Add Admin User</h3>
+        <form id="admin-add-form">
+            <input type="text" name="username" placeholder="user">
+            <button type="submit">Add</button>
+        </form>
+        <h3 class="heading">Active Admin Accounts</h3>
+        <table id="admin-list">
+            <tr>
+                <th>Admin Username</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>CMDR CONTRUM</td>
+                <td><button>remove</button></td>
+            </tr>
+            <tr>
+                <td>CMDR ADMIRAL SMITH</td>
+                <td><button>remove</button></td>
+            </tr>
+            <tr>
+                <td>CMDR FENRIS DAYLOTN</td>
+                <td><button>remove</button></td>
+            </tr>
+        </table>
+        <hr>
+    </div>
+    <%- include('../partials/footer.ejs') %>
+
+    <script src="/static/js/global.js" async defer></script>
+</body>
+
+</html>

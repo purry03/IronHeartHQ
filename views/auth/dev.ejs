@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IronHeartHQ</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/normalizer.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+    <link rel="stylesheet" href="/static/css/auth/signin.css">
+</head>
+
+<body>
+    <div id="main">
+        <h1> IronHeart<strong>HQ</strong> | Dev Console </h1>
+        <hr>
+        <p>Please enter your developer credentials</p>
+        <form action="/auth/dev" method="post">
+            <label>Username: <input type="text" name="username" placeholder="Dev Username"></input></label>
+            <label>Password: <input name="password" type="password" placeholder="Password"></input></label>
+            <button type="submit">Sign In</button>
+        </form>
+        <%- include('../partials/footer.ejs') %>
+    </div>
+    <script src="" async defer></script>
+</body>
+
+</html>
