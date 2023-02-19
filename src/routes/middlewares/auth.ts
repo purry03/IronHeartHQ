@@ -15,7 +15,6 @@ export async function authExtract(req: Request, res: Response, next: NextFunctio
 			name: token.sub,
 			admin: token.admin,
 			dev: token.dev,
-			roles: token.roles
 		};
 	}	
 	next();
@@ -23,7 +22,7 @@ export async function authExtract(req: Request, res: Response, next: NextFunctio
 
 export async function requireUserAuth(req: Request, res: Response, next: NextFunction) {
 	if(req.user != null){
-		if(req.user.roles.includes('user')){
+		if(req.user){
 			next();
 		}
 		else{
@@ -36,17 +35,16 @@ export async function requireUserAuth(req: Request, res: Response, next: NextFun
 	}
 }
 
-export async function requireDevAuth(req: Request, res: Response, next: NextFunction) {
+export async function requireAdminAuth(req: Request, res: Response, next: NextFunction) {
 	if(req.user != null){
-		if(req.user.roles.includes('dev')){
+		if(req.user.admin){
 			next();
 		}
 		else{
-			res.redirect('/auth/dev');
+			res.render('error/403');
 		}
 	}
 	else{
-		// redirect to login page
-		res.redirect('/auth/dev');
+		res.render('error/403');
 	}
 }

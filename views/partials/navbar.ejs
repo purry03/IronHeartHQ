@@ -1,15 +1,11 @@
 <div id="navbar">
    <h3>IronHeart<strong>HQ</strong></h3>
-   <% if(!user.admin && !user.dev) { %>
       <ul>
          <li><a href="#">Guides</a></li>
          <li><a href="#">Events</a></li>
-         <li><a href="#">Merch Store</a></li>
+         <% if(user.admin ) { %>
+         <li><a href="/admin">Admin Console</a></li>
+         <% } %>
       </ul>
       <h4>CMDR <%=user.name.toUpperCase()%> | <i class="fa-solid fa-right-from-bracket" title="Log Out" id="logout-button" onclick="logout();"></i></h4>
-   <% } %>
-   <% if(user.dev === true) { %>
-      <a title="Log Out" id="logout-button" onclick="logout();" style="margin-left: auto;">Log Out</a>
-   <% } %>
-
 </div>

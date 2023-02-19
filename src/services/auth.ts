@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 import config from '../config';
-import getUser from '../database/read';
-import addUser from '../database/write';
+import {getUserByName} from '../database/read';
+import {addUser} from '../database/write';
 
 import { errorHandler } from '../routes/middlewares/error';
 
@@ -19,19 +19,18 @@ export async function getSignin(req: Request,res: Response){
 export async function postSignin(req: Request,res: Response){
 	try{
 		const {name,password} = req.body;
-		const user = await getUser(name);
+		const user = await getUserByName(name);
 		if(user === undefined){
 			// user not found with this name
-			res.sendStatus(403);
+			res.render('auth/signin',{error: true});
 			return;
 		}
 		const isPasswordSame = await bcrypt.compare(password, user.password);
 		if(isPasswordSame){
 			const token = jwt.sign({
 				sub: name,
-				admin: false,
+				admin: user.admin,
 				dev: false,
-				roles: user.roles
 			},
 			config.JWTSECRET!
 			);
@@ -40,7 +39,7 @@ export async function postSignin(req: Request,res: Response){
 			return;
 		}
 		else{
-			res.sendStatus(403);
+			res.render('auth/signin',{error: true});
 			return;
 		}
 	}
@@ -57,7 +56,7 @@ export async function getRegister(req: Request,res: Response){
 export async function postRegister(req: Request,res: Response){
 	try{
 		const {name,password} = req.body;
-		const user = await getUser(name);
+		const user = await getUserByName(name);
 		if(user !== undefined){
 			// user not found with this name
 			res.sendStatus(403);
@@ -66,34 +65,6 @@ export async function postRegister(req: Request,res: Response){
 		const hashedPassword = await bcrypt.hash(password,10);
 		await addUser(name, hashedPassword);
 		res.sendStatus(200);
-	}
-	catch(err){
-		errorHandler(req,res,err);
-	}
-}
-
-export async function getDev(req: Request,res: Response){
-	res.render('auth/dev');
-}
-
-export async function postDev(req: Request,res: Response){
-	try{
-		const {username,password} = req.body;
-		if(config.DEVUSER === username && config.DEVPASS === password){
-			const token = jwt.sign({
-				sub: username,
-				admin: false,
-				dev: true,
-				roles: ['dev']
-			},
-			config.JWTSECRET!
-			);
-			res.cookie('sessionToken',token);
-			res.redirect('/dev');
-		}
-		else{
-			res.redirect('/auth/dev');
-		}
 	}
 	catch(err){
 		errorHandler(req,res,err);

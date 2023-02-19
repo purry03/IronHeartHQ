@@ -1,8 +1,8 @@
 import express from 'express';
 import * as auth from '../../services/auth';
 import * as user from '../../services/user';
-import * as dev from '../../services/dev';
-import { requireDevAuth, requireUserAuth } from '../middlewares/auth';
+import * as admin from '../../services/admin';
+import { requireAdminAuth, requireUserAuth } from '../middlewares/auth';
 
 const router = express.Router();
 
@@ -26,20 +26,16 @@ router.post('/auth/register',(req,res)=>{
 	auth.postRegister(req,res);
 });
 
-router.get('/auth/dev',(req,res)=>{
-	auth.getDev(req,res);
-});
-
-router.post('/auth/dev',(req,res)=>{
-	auth.postDev(req,res);
-});
-
 router.get('/', requireUserAuth ,(req,res)=> {
 	user.getIndex(req,res);
 });
 
-router.get('/dev',requireDevAuth, (req,res)=>{
-	dev.getIndex(req,res);
+router.get('/admin', requireAdminAuth, (req,res)=>{
+	admin.getIndex(req,res);
+});
+
+router.post('/admin/transaction', requireAdminAuth, (req,res)=>{
+	admin.postTransaction(req,res);
 });
 
 export default router;

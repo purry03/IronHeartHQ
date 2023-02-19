@@ -18,6 +18,10 @@ button{
     cursor: pointer;
 }
 
+select{
+    padding: 5px 20px;
+}
+
 #navbar{
     position: fixed;
     top: 0;

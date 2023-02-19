@@ -41,3 +41,11 @@ form input{
 form button{
     margin-top: 10px;
 }
+
+.error{
+    padding: 5px;
+    color: white;
+    background-color: #FF9494;
+    text-align: center;
+    text-transform: lowercase;
+}

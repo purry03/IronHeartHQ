@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IronHeartHQ</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/normalizer.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+    <link rel="stylesheet" href="/static/css/datatables.css">
+    <link rel="stylesheet" href="/static/css/admin/index.css">
+</head>
+
+<body>
+    <%- include('../partials/navbar.ejs',{user}) %>
+    <div id="main">
+        <h3 class="heading" style="margin-top: 25px;">Perform Transaction</h3>
+        <form id="transaction-form" action="/admin/transaction" method="post">
+            <input name='amount' type="text" placeholder="amount" class="amount" required>
+            <select name="operation" required>
+                <option value="credit" selected>Credit +</option>
+                <option value="debit">Debit -</option>
+            </select>
+            <select required name="username">
+                <% for(const user of allUsers) { %>
+                <option value="<%=user.name%>"><%=user.name%></option>
+                <%}%>
+            </select>
+            <button type="submit">Execute</button>
+        </form>
+        <hr>
+        <h3 class="heading" style="margin: 25px 0;">User List</h3>
+        <table id="userTable">
+            <thead>
+            <tr>
+                <th>Index</th>
+                <th>Commander Name</th>
+                <th>isAdmin?</th>
+                <th>Wallet Balance</th>
+            </tr>
+            </thead> 
+            <tbody>
+            <% for(const [index,user] of allUsers.entries()) { %>
+            <tr>
+                <td><%=index+1%></td>
+                <td><%=user.name%></td>
+                <td><%=user.admin%></td>
+                <td><%=user.balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%></td>
+            </tr>
+            <%}%>
+            </tbody>    
+        </table>
+        <hr>
+        <h3 class="heading" style="margin: 25px 0;">Past Transactions</h3>
+        <table id="transactionTable">
+            <thead>
+            <tr>
+                <th>Index</th>
+                <th>Commander Name</th>
+                <th>Operation</th>
+                <th>Amount</th>
+            </tr>
+            </thead> 
+            <tbody>
+            <% for(const [index,transaction] of allTransactions.entries()) { %>
+            <tr>
+                <td><%=index+1%></td>
+                <td><%=transaction.name%></td>
+                <td><%=transaction.operation%></td>
+                <td><%=transaction.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%></td>
+            </tr>
+            <%}%>
+            </tbody>    
+        </table>
+
+    </div>
+    <%- include('../partials/footer.ejs') %>
+
+
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/global.js"></script>
+    <script src="/static/js/admin/index.js"></script>
+    <script src="/static/js/fontawesome.js"></script>
+    <script src="/static/js/datatables.js"></script>
+    <script defer> 
+        $(document).ready( function () {
+            $('#userTable').DataTable({
+                "iDisplayLength": 25
+            });
+            $('#transactionTable').DataTable({
+                "iDisplayLength": 25
+            });
+        } );
+    </script>
+</body>
+
+</html>
