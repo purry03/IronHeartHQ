@@ -1,13 +1,10 @@
-$('.amount').keyup(function(event) {
+// eslint-disable-next-line no-undef
+const socket = io();
 
-    // skip for arrow keys
-    if(event.which >= 37 && event.which <= 40) return;
-  
-    // format number
-    $(this).val(function(index, value) {
-      return value
-      .replace(/\D/g, "")
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      ;
-    });
-  });
+socket.on('connect', () => {
+	console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+});
+
+socket.on('log', (data) => { 
+	$('pre').append(`\n${data}`);
+});

@@ -1,7 +1,12 @@
+import fs from 'fs';
+import path from 'path';
+
 import { Request, Response } from 'express';
 import {getUserByName,getAllUsers, getAllTransactions} from '../database/read';
 import { addTransaction, updateUserBalance } from '../database/write';
 import { timeSince } from '../utils/date';
+
+
 
 export async function getIndex(req: Request,res: Response){
 	res.render('admin/index',{user:req.user});

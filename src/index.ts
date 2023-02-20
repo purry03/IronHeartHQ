@@ -5,8 +5,12 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { authExtract } from './routes/middlewares/auth';
 
+import { Server, Socket } from 'socket.io';
+import { Tail } from 'tail';
 
-import path from 'node:path';
+import path from 'path';
+import { exec } from 'child_process';
+
 
 import config from './config';
 import logger from './utils/logger';
@@ -14,6 +18,8 @@ import router from './routes/';
 import { notFoundHandler } from './routes/middlewares/error';
 
 const app = express();
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const http = require('http').Server(app);
 
 // Basic Configuration
 app.set('view engine', 'ejs');  // set default view engine to ejs
@@ -37,9 +43,31 @@ app.use(router.v0); // use v0 routes
 
 app.use(notFoundHandler);
 
-app.listen(config.PORT || 80,()=>{
+http.listen(config.PORT || 80,()=>{
 	logger.info(`server online on port ${config.PORT}`);
 });
+
+
+const io = new Server(http, {});
+const logFile = path.join(__dirname,'..','application.log')
+const tail = new Tail(logFile);
+let socket: Socket|null = null;
+
+// for livestreaming server logs
+io.on('connection', (sk) => {
+	socket = sk;
+	exec(`tail -n 50 ${logFile}`,  (error, stdout) => {
+		sk.emit('log', stdout);
+	});
+});
+
+tail.on('line', function(data) {
+	if(socket !== null){
+		socket.emit('log', data);
+	}
+});	  
+
+io.listen(3001);
 
 process
 	.on('unhandledRejection', (reason, p) => {

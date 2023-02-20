@@ -14,6 +14,7 @@ hr{
 }
 
 .card{
+    width: 15%;
     color: white;
     background-color: #2298F1;
     padding: 20px 30px;
@@ -40,4 +41,23 @@ hr{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+}
+
+button{
+    background-color: transparent;
+    border: none;
+    font-size: 1.25rem;
+}
+
+button:hover{
+    text-decoration: underline;
+}
+
+pre{
+    height: 500px;
+    width: 100%;
+    background-color: #f6f6f6;
+    font-family: monospace;
+    padding: 20px;
+    overflow: auto;
 }
