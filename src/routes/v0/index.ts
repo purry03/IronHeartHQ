@@ -30,8 +30,16 @@ router.get('/', requireUserAuth ,(req,res)=> {
 	user.getIndex(req,res);
 });
 
+router.get('/wallet/history', requireUserAuth ,(req,res)=> {
+	user.getWalletHistory(req,res);
+});
+
 router.get('/admin', requireAdminAuth, (req,res)=>{
 	admin.getIndex(req,res);
+});
+
+router.get('/admin/transaction', requireAdminAuth, (req,res)=>{
+	admin.getTransaction(req,res);
 });
 
 router.post('/admin/transaction', requireAdminAuth, (req,res)=>{

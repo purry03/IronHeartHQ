@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IronHeartHQ</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/normalizer.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+    <link rel="stylesheet" href="/static/css/datatables.css">
+</head>
+
+<body>
+    <%- include('../partials/navbar.ejs',{user}) %>
+    <div id="main">
+
+        <h3 class="heading" style="margin: 25px 0;">Past Transactions</h3>
+        <table id="transactionTable">
+            <thead>
+            <tr>
+                <th style="display: none;">Created At</th>
+                <th style="width:25%">Time</th>
+                <th>Operation</th>
+                <th>Amount</th>
+            </tr>
+            </thead> 
+            <tbody>
+            <% for(const [index,transaction] of transactions.entries()) { %>
+            <% if(transaction.operation == 'debit'){ %>
+            <tr style="background-color: #ff9494;"> 
+            <%}%>
+            <% if(transaction.operation == 'credit'){ %>
+            <tr style="background-color: #4bb543;"> 
+            <%}%>
+                <td style="display: none;"><%=transaction.createdAt%></td>
+                <td><%=transaction.timeAgo%></td>
+                <td><%=transaction.operation%></td>
+                <td><%=transaction.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%></td>
+            </tr>
+            <%}%>
+            </tbody>    
+        </table>
+
+    </div>
+    <%- include('../partials/footer.ejs') %>
+
+
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/global.js"></script>
+    <script src="/static/js/admin/index.js"></script>
+    <script src="/static/js/fontawesome.js"></script>
+    <script src="/static/js/datatables.js"></script>
+    <script defer> 
+        $(document).ready( function () {
+            $('#userTable').DataTable({
+                "iDisplayLength": 25
+            });
+            $('#transactionTable').DataTable({
+                "iDisplayLength": 25,
+                order: [[0, 'desc']],
+            });
+        } );
+    </script>
+</body>
+
+</html>

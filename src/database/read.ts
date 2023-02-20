@@ -19,3 +19,10 @@ export async function getAllTransactions(): Promise<Transactions[]>{
 	const transactions = await (await database.query(text)).rows;
 	return transactions;
 }
+
+export async function getAllTransactionsByName(username: string): Promise<Transactions[]>{
+	const text = 'SELECT transactions."createdAt", name, operation, amount FROM transactions INNER JOIN users ON transactions.user_id = users.id WHERE name=$1 ORDER BY transactions."createdAt" DESC';
+	const values = [username.toUpperCase()];
+	const transactions = await (await database.query(text,values)).rows;
+	return transactions;
+}

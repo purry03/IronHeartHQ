@@ -4,6 +4,10 @@ import { addTransaction, updateUserBalance } from '../database/write';
 import { timeSince } from '../utils/date';
 
 export async function getIndex(req: Request,res: Response){
+	res.render('admin/index',{user:req.user});
+}
+
+export async function getTransaction(req: Request,res: Response){
 	const user = await getUserByName(req.user!.name);
 	const allUsers = await getAllUsers();
 	const allTransactions = await getAllTransactions();
@@ -12,7 +16,7 @@ export async function getIndex(req: Request,res: Response){
 		const interval = timeSince(day);
 		transaction['timeAgo'] = `${interval} ago`;
 	});
-	res.render('admin/index',{user,allUsers,allTransactions});
+	res.render('admin/transaction',{user,allUsers,allTransactions});
 }
 
 export async function postTransaction(req: Request,res: Response){
@@ -28,5 +32,5 @@ export async function postTransaction(req: Request,res: Response){
 	}
 	await updateUserBalance(username,newBalance);
 	await addTransaction(user.id,operation,intAmount);
-	res.redirect('/admin');
+	res.redirect('/admin/transaction');
 }

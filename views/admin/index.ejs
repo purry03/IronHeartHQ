@@ -16,72 +16,40 @@
 <body>
     <%- include('../partials/admin/navbar.ejs',{user}) %>
     <div id="main">
-        <h3 class="heading" style="margin-top: 25px;">Perform Transaction</h3>
-        <form id="transaction-form" action="/admin/transaction" method="post">
-            <input name='amount' type="text" placeholder="amount" class="amount" required>
-            <select name="operation" required>
-                <option value="credit" selected>Credit +</option>
-                <option value="debit">Debit -</option>
-            </select>
-            <select required name="username">
-                <% for(const user of allUsers) { %>
-                <option value="<%=user.name%>"><%=user.name%></option>
-                <%}%>
-            </select>
-            <button type="submit">Execute</button>
-        </form>
+        <div class="cards">
+            <div class="card">
+                <h3>Registered Users</h3>
+                <p>25</p>
+            </div>
+            <div class="card">
+                <h3>Pending Payout Requests</h3>
+                <p>6</p>
+            </div>
+            <div class="card">
+                <h3>Total Wallet Balance</h3>
+                <p>500,000,000 CR</p>
+            </div>
+            <div class="card">
+                <h3>Total Pending Payout Amount</h3>
+                <p>240,000,000 CR</p>
+            </div>
+            <div class="card">
+                <h3>Last Payout</h3>
+                <p>2 hours ago</p>
+            </div>
+            <div class="card">
+                <h3>Oldest Payout Request In Queue</h3>
+                <p>37 hours</p>
+            </div>
+        </div>
         <hr>
-        <h3 class="heading" style="margin: 25px 0;">User List</h3>
-        <table id="userTable">
-            <thead>
-            <tr>
-                <th>Index</th>
-                <th>Commander Name</th>
-                <th>Admin</th>
-                <th>Wallet Balance</th>
-            </tr>
-            </thead> 
-            <tbody>
-            <% for(const [index,user] of allUsers.entries()) { %>
-            <tr>
-                <td><%=index+1%></td>
-                <td><%=user.name%></td>
-                <td><%=user.admin%></td>
-                <td><%=user.balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%></td>
-            </tr>
-            <%}%>
-            </tbody>    
-        </table>
-        <hr>
-        <h3 class="heading" style="margin: 25px 0;">Past Transactions</h3>
-        <table id="transactionTable">
-            <thead>
-            <tr>
-                <th style="display: none;">Created At</th>
-                <th style="width:25%">Time</th>
-                <th>Commander Name</th>
-                <th>Operation</th>
-                <th>Amount</th>
-            </tr>
-            </thead> 
-            <tbody>
-            <% for(const [index,transaction] of allTransactions.entries()) { %>
-            <% if(transaction.operation == 'debit'){ %>
-            <tr style="background-color: #ff9494;"> 
-            <%}%>
-            <% if(transaction.operation == 'credit'){ %>
-            <tr style="background-color: #4bb543;"> 
-            <%}%>
-                <td style="display: none;"><%=transaction.createdAt%></td>
-                <td><%=transaction.timeAgo%></td>
-                <td><%=transaction.name%></td>
-                <td><%=transaction.operation%></td>
-                <td><%=transaction.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%></td>
-            </tr>
-            <%}%>
-            </tbody>    
-        </table>
-
+        <div class="menu">
+            <a href="/admin/transaction"><button>Perform Transactions</button></a>  
+            <a href="/admin/payouts"><button>Payout Requests</button></a>  
+            <a href="/admin/transaction"><button>Users</button></a>  
+            <a href="/admin/transaction"><button>Accounements</button></a>  
+            <a href="/admin/transaction"><button>Fleet Carriers</button></a>  
+        </div>
     </div>
     <%- include('../partials/footer.ejs') %>
 
@@ -90,18 +58,6 @@
     <script src="/static/js/global.js"></script>
     <script src="/static/js/admin/index.js"></script>
     <script src="/static/js/fontawesome.js"></script>
-    <script src="/static/js/datatables.js"></script>
-    <script defer> 
-        $(document).ready( function () {
-            $('#userTable').DataTable({
-                "iDisplayLength": 25
-            });
-            $('#transactionTable').DataTable({
-                "iDisplayLength": 25,
-                order: [[0, 'desc']],
-            });
-        } );
-    </script>
 </body>
 
 </html>
