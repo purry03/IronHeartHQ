@@ -12,4 +12,5 @@ export interface Transactions{
     operation: string,
     amount: string,
     createdAt: string,
+    timeAgo?: string,
 }

@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <%- include('../partials/navbar.ejs',{user}) %>
+    <%- include('../partials/admin/navbar.ejs',{user}) %>
     <div id="main">
         <h3 class="heading" style="margin-top: 25px;">Perform Transaction</h3>
         <form id="transaction-form" action="/admin/transaction" method="post">
@@ -37,7 +37,7 @@
             <tr>
                 <th>Index</th>
                 <th>Commander Name</th>
-                <th>isAdmin?</th>
+                <th>Admin</th>
                 <th>Wallet Balance</th>
             </tr>
             </thead> 
@@ -57,7 +57,8 @@
         <table id="transactionTable">
             <thead>
             <tr>
-                <th>Index</th>
+                <th style="display: none;">Created At</th>
+                <th style="width:25%">Time</th>
                 <th>Commander Name</th>
                 <th>Operation</th>
                 <th>Amount</th>
@@ -65,8 +66,14 @@
             </thead> 
             <tbody>
             <% for(const [index,transaction] of allTransactions.entries()) { %>
-            <tr>
-                <td><%=index+1%></td>
+            <% if(transaction.operation == 'debit'){ %>
+            <tr style="background-color: #ff9494;"> 
+            <%}%>
+            <% if(transaction.operation == 'credit'){ %>
+            <tr style="background-color: #4bb543;"> 
+            <%}%>
+                <td style="display: none;"><%=transaction.createdAt%></td>
+                <td><%=transaction.timeAgo%></td>
                 <td><%=transaction.name%></td>
                 <td><%=transaction.operation%></td>
                 <td><%=transaction.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%></td>
@@ -90,7 +97,8 @@
                 "iDisplayLength": 25
             });
             $('#transactionTable').DataTable({
-                "iDisplayLength": 25
+                "iDisplayLength": 25,
+                order: [[0, 'desc']],
             });
         } );
     </script>

@@ -1,11 +1,9 @@
 <div id="navbar">
    <h3><a href="/">IronHeart<strong>HQ</strong></a></h3>
       <ul>
-         <li><a href="#">Guides</a></li>
-         <li><a href="#">Events</a></li>
-         <% if(user.admin ) { %>
-         <li><a href="/admin">Admin Console</a></li>
-         <% } %>
+         <li><a href="#">Wallet</a></li>
+         <li><a href="#">Manage Guides</a></li>
+         <li><a href="#">Manage Events</a></li>
       </ul>
       <h4>CMDR <%=user.name.toUpperCase()%> | <i class="fa-solid fa-right-from-bracket" title="Log Out" id="logout-button" onclick="logout();"></i></h4>
 </div>

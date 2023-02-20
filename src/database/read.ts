@@ -15,7 +15,7 @@ export async function getAllUsers(): Promise<User[]>{
 }
 
 export async function getAllTransactions(): Promise<Transactions[]>{
-	const text = 'SELECT * FROM transactions INNER JOIN users ON transactions.user_id = users.id ORDER BY transactions."createdAt" DESC';
+	const text = 'SELECT transactions."createdAt", name, operation, amount FROM transactions INNER JOIN users ON transactions.user_id = users.id ORDER BY transactions."createdAt" DESC';
 	const transactions = await (await database.query(text)).rows;
 	return transactions;
 }

@@ -1,11 +1,17 @@
 import { Request, Response } from 'express';
 import {getUserByName,getAllUsers, getAllTransactions} from '../database/read';
 import { addTransaction, updateUserBalance } from '../database/write';
+import { timeSince } from '../utils/date';
 
 export async function getIndex(req: Request,res: Response){
 	const user = await getUserByName(req.user!.name);
 	const allUsers = await getAllUsers();
 	const allTransactions = await getAllTransactions();
+	allTransactions.forEach(transaction => {
+		const day = new Date(transaction.createdAt);
+		const interval = timeSince(day);
+		transaction['timeAgo'] = `${interval} ago`;
+	});
 	res.render('admin/index',{user,allUsers,allTransactions});
 }
 
