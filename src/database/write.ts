@@ -20,3 +20,10 @@ export async function addTransaction(userId: number, operation: string, amount: 
 	await database.query(text,values);
 	return;
 }
+
+export async function addPayoutRequest(userId: number, amount: number){
+	const text = 'INSERT INTO payouts(user_id,amount) VALUES($1,$2)';
+	const values = [userId,amount];
+	await database.query(text,values);
+	return;
+}

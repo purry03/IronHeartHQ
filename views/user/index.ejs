@@ -29,8 +29,8 @@
         <a href="/wallet/history"><h3 id="transaction-history">View Transaction History</h3></a> 
         <h4 class="subheading">Payout</h4>
         <div id="wallet-buttons-wrapper">
-            <form style="margin-top: 15px;">
-                <input type="text" placeholder="payout amount">
+            <form style="margin-top: 15px;" action="/wallet/payout/request" method="post" id="payout-form">
+                <input type="text" placeholder="payout amount" name="amount" id="payout-amount-input">
                 <button type="submit">Request Payout</button>
             </form>
         </div>
@@ -89,7 +89,10 @@
 
 
     <script src="/static/js/fontawesome.js"></script>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/notify.js" async defer></script>
     <script src="/static/js/global.js" async defer></script>
+    <script src="/static/js/user/index.js" async defer></script>
 </body>
 
 </html>

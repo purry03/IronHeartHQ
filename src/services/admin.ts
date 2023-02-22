@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { Request, Response } from 'express';
-import {getUserByName,getAllUsers, getAllTransactions} from '../database/read';
+import {getUserByName,getAllUsers, getAllTransactions, getAllPayouts} from '../database/read';
 import { addTransaction, updateUserBalance } from '../database/write';
 import { timeSince } from '../utils/date';
 
@@ -38,4 +38,14 @@ export async function postTransaction(req: Request,res: Response){
 	await updateUserBalance(username,newBalance);
 	await addTransaction(user.id,operation,intAmount);
 	res.redirect('/admin/transaction');
+}
+
+export async function getPayouts(req: Request,res: Response){
+	const allPayouts = await getAllPayouts();
+	allPayouts.forEach(payout => {
+		const day = new Date(payout.createdAt);
+		const interval = timeSince(day);
+		payout['timeAgo'] = `${interval} ago`;
+	});
+	res.render('admin/payouts',{user: req.user, allPayouts});
 }

@@ -34,6 +34,10 @@ router.get('/wallet/history', requireUserAuth ,(req,res)=> {
 	user.getWalletHistory(req,res);
 });
 
+router.post('/wallet/payout/request', requireUserAuth ,(req,res)=> {
+	user.postPayoutRequest(req,res);
+});
+
 router.get('/admin', requireAdminAuth, (req,res)=>{
 	admin.getIndex(req,res);
 });
@@ -45,5 +49,10 @@ router.get('/admin/transaction', requireAdminAuth, (req,res)=>{
 router.post('/admin/transaction', requireAdminAuth, (req,res)=>{
 	admin.postTransaction(req,res);
 });
+
+router.get('/admin/payouts', requireAdminAuth, (req,res)=>{
+	admin.getPayouts(req,res);
+});
+
 
 export default router;
