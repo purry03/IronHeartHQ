@@ -48,3 +48,17 @@ export async function deletePayoutRequest(id: number){
 	await database.query(text,values);
 	return;
 }
+
+export async function addAccessCode(name: string,accessCode: string){
+	const text = 'INSERT INTO accesscodes(user_name, code) VALUES($1, $2)';
+	const values = [name.toUpperCase(), accessCode];
+	await database.query(text,values);
+	return;
+}
+
+export async function updateAccessCodeConsumed(name: string,consumed: boolean){
+	const text = 'UPDATE accesscodes SET consumed = $1 WHERE user_name = $2';
+	const values = [consumed, name.toUpperCase()];
+	await database.query(text,values);
+	return;
+}

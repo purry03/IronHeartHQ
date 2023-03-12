@@ -1,4 +1,4 @@
-import { Payout, Transaction, User } from '../declarations';
+import { AccessCode, Payout, Transaction, User } from '../declarations';
 import database from './index';
 
 export async function getUserByName(name: string): Promise<User>{
@@ -53,4 +53,17 @@ export async function getPayoutByID(id: number): Promise<Payout>{
 	const values = [id];
 	const payout = (await database.query(text, values)).rows[0];
 	return payout;
+}
+
+export async function getAllAccessCodes(): Promise<AccessCode[]>{
+	const text = 'SELECT * FROM accesscodes ORDER BY id ASC';
+	const accessCodes = await (await database.query(text)).rows;
+	return accessCodes;
+}
+
+export async function getAccessCodeByName(name: string): Promise<AccessCode>{
+	const text = 'SELECT * FROM accesscodes WHERE user_name = $1';
+	const values = [name.toUpperCase()];
+	const accessCode = await (await database.query(text,values)).rows[0];
+	return accessCode;
 }

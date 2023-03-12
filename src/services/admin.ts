@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import {getUserByName,getAllUsers, getAllTransactions, getAllPayouts, getPayoutByID, getUserByID} from '../database/read';
-import { addTransaction, deletePayoutRequest, removeUser, updateUserAdmin, updateUserBalance } from '../database/write';
+import {getUserByName,getAllUsers, getAllTransactions, getAllPayouts, getPayoutByID, getUserByID, getAllAccessCodes} from '../database/read';
+import { addAccessCode, addTransaction, deletePayoutRequest, removeUser, updateUserAdmin, updateUserBalance } from '../database/write';
 import { timeSince } from '../utils/date';
-
+import uid from 'uid-safe';
 
 
 export async function getIndex(req: Request,res: Response){
@@ -82,4 +82,16 @@ export async function getRemove(req: Request,res: Response){
 	const user = await getUserByID(id);
 	await removeUser(user.name);
 	res.redirect('/admin/users');
+}
+
+export async function getAccessCodes(req: Request,res: Response){
+	const allAccessCodes = await getAllAccessCodes();
+	res.render('admin/accessCodes',{user: req.user, allAccessCodes});
+}
+
+export async function postAccessCodes(req: Request,res: Response){
+	const {name} = req.body;
+	const accessCode = uid.sync(8);
+	await addAccessCode(name,accessCode);
+	res.redirect('/admin/accessCodes');
 }

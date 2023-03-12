@@ -23,3 +23,11 @@ export interface Payout{
     createdAt: string,
     timeAgo?: string,
 }
+
+export interface AccessCode{
+    id: number,
+    user_name: string,
+    code: string,
+    consumed: boolean,
+    createdAt: string,
+}

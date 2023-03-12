@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 import config from '../config';
-import {getUserByName} from '../database/read';
-import {addUser} from '../database/write';
+import {getAccessCodeByName, getUserByName} from '../database/read';
+import {addUser, updateAccessCodeConsumed} from '../database/write';
 
 import { errorHandler } from '../routes/middlewares/error';
 
@@ -55,15 +55,37 @@ export async function getRegister(req: Request,res: Response){
 
 export async function postRegister(req: Request,res: Response){
 	try{
-		const {name,password} = req.body;
+		const {name,password,password2,accessKey} = req.body;
+		if(password !== password2){
+			res.render('auth/register',{error: 'entered passwords do not match'});
+		}
 		const user = await getUserByName(name);
 		if(user !== undefined){
 			// existing user found with this name
-			res.sendStatus(403);
+			res.render('auth/register',{error: 'commander already registered'});
+			return;
+		}
+		// check if access code exists for this user
+		const accessCode = await getAccessCodeByName(name);
+		if(accessCode === undefined){
+			// no valid access code
+			res.render('auth/register',{error: 'access code invalid'});
+			return;
+		}
+		else if(accessCode.consumed === true){
+			// access code already consumed
+			res.render('auth/register',{error: 'access code already consumed'});
+			return;
+		}
+		else if(accessCode.code !== accessKey.trim()){
+			// access code invalid
+			res.render('auth/register',{error: 'access code invalid'});
 			return;
 		}
 		const hashedPassword = await bcrypt.hash(password,10);
 		await addUser(name, hashedPassword);
+		// set access code consumed to true
+		await updateAccessCodeConsumed(name, true);
 		res.redirect('/auth');
 	}
 	catch(err){

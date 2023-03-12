@@ -70,4 +70,12 @@ router.get('/admin/user/:id/remove', requireAdminAuth, (req,res)=>{
 	admin.getRemove(req,res);
 });
 
+router.get('/admin/accessCodes', requireAdminAuth, (req,res)=>{
+	admin.getAccessCodes(req,res);
+});
+
+router.post('/admin/accessCodes', requireAdminAuth, (req,res)=>{
+	admin.postAccessCodes(req,res);
+});
+
 export default router;

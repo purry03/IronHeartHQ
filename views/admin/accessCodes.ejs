@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IronHeartHQ</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/normalizer.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+    <link rel="stylesheet" href="/static/css/datatables.css">
+    <link rel="stylesheet" href="/static/css/admin/transaction.css">
+</head>
+
+<body>
+    <%- include('../partials/admin/navbar.ejs',{user}) %>
+    <div id="main">
+        <h3 class="heading" style="margin-top: 25px;">Generate New Code</h3>
+        <form id="transaction-form" action="/admin/accessCodes" method="post">
+            <input name='name' type="text" placeholder="Commander Name" style="text-transform: uppercase;" required>
+            <button type="submit">Execute</button>
+        </form>
+        <hr>
+        <h3 class="heading" style="margin: 25px 0;">Access Codes List</h3>
+        <table id="userTable">
+            <thead>
+            <tr>
+                <th>Index</th>
+                <th>Generated On</th>
+                <th>Commander Name</th>
+                <th>Access Code</th>
+                <th>Consumed</th>
+                <th>Action</th>
+            </tr>
+            </thead> 
+            <tbody>
+            <% for(const [index,accessCode] of allAccessCodes.entries()) { %>
+            <tr>
+                <td><%=index+1%></td>
+                <td><%=accessCode.createdAt%></td>
+                <td><%=accessCode.user_name%></td>
+                <td><%=accessCode.code%></td>
+                <td><%=accessCode.consumed?"Yes":"No"%></td>
+                <td>
+                    <a href="/admin/accessCode/<%=accessCode.id%>/delete"><button>Delete</button></a>
+                </td>
+            </tr>
+            <%}%>
+            </tbody>    
+        </table>
+
+    </div>
+    <%- include('../partials/footer.ejs') %>
+
+
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/global.js"></script>
+    <script src="/static/js/admin/transaction.js"></script>
+    <script src="/static/js/fontawesome.js"></script>
+    <script src="/static/js/datatables.js"></script>
+    <script defer> 
+        $(document).ready( function () {
+            $('#userTable').DataTable({
+                "iDisplayLength": 25
+            });
+            $('#transactionTable').DataTable({
+                "iDisplayLength": 25,
+                order: [[0, 'desc']],
+            });
+        } );
+    </script>
+</body>
+
+</html>
