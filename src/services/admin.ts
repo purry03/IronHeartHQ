@@ -1,9 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-
 import { Request, Response } from 'express';
-import {getUserByName,getAllUsers, getAllTransactions, getAllPayouts} from '../database/read';
-import { addTransaction, updateUserBalance } from '../database/write';
+import {getUserByName,getAllUsers, getAllTransactions, getAllPayouts, getPayoutByID} from '../database/read';
+import { addTransaction, deletePayoutRequest, updateUserBalance } from '../database/write';
 import { timeSince } from '../utils/date';
 
 
@@ -48,4 +45,22 @@ export async function getPayouts(req: Request,res: Response){
 		payout['timeAgo'] = `${interval} ago`;
 	});
 	res.render('admin/payouts',{user: req.user, allPayouts});
+}
+
+export async function getPayoutAction(req: Request,res: Response){
+	const {id,action} = req.params;
+	if (action === 'accept'){
+		const payoutDetails= await getPayoutByID(parseInt(id));
+		const userDetails = await getUserByName(req.user!.name);
+		const newUserBalance = parseInt(userDetails.balance) - parseInt(payoutDetails.amount);
+		await updateUserBalance(req.user!.name, newUserBalance);
+		await deletePayoutRequest(parseInt(id));
+	}
+	else if (action === 'reject'){ 
+		await deletePayoutRequest(parseInt(id));
+	}
+	else{
+		throw new Error('unknown payout action type');
+	}
+	res.redirect('/admin/payouts');
 }
