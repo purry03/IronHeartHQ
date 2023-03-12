@@ -14,6 +14,20 @@ export async function updateUserBalance(name: string,balance: number){
 	return;
 }
 
+export async function updateUserAdmin(name: string,admin: boolean){
+	const text = 'UPDATE users SET admin = $1 WHERE name = $2';
+	const values = [admin, name.toUpperCase()];
+	await database.query(text,values);
+	return;
+}
+
+export async function removeUser(name: string){
+	const text = 'DELETE FROM users WHERE name = $1';
+	const values = [name.toUpperCase()];
+	await database.query(text,values);
+	return;
+}
+
 export async function addTransaction(userId: number, operation: string, amount: number){
 	const text = 'INSERT INTO transactions(user_id,operation,amount) VALUES($1,$2,$3)';
 	const values = [userId,operation,amount];

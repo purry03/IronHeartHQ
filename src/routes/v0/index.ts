@@ -58,4 +58,16 @@ router.get('/admin/payout/:id/:action', requireAdminAuth, (req,res)=>{
 	admin.getPayoutAction(req,res);
 });
 
+router.get('/admin/users', requireAdminAuth, (req,res)=>{
+	admin.getUsers(req,res);
+});
+
+router.get('/admin/user/:id/toggleAdmin', requireAdminAuth, (req,res)=>{
+	admin.getToggleAdmin(req,res);
+});
+
+router.get('/admin/user/:id/remove', requireAdminAuth, (req,res)=>{
+	admin.getRemove(req,res);
+});
+
 export default router;

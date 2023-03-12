@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import {getUserByName,getAllUsers, getAllTransactions, getAllPayouts, getPayoutByID} from '../database/read';
-import { addTransaction, deletePayoutRequest, updateUserBalance } from '../database/write';
+import {getUserByName,getAllUsers, getAllTransactions, getAllPayouts, getPayoutByID, getUserByID} from '../database/read';
+import { addTransaction, deletePayoutRequest, removeUser, updateUserAdmin, updateUserBalance } from '../database/write';
 import { timeSince } from '../utils/date';
 
 
@@ -51,7 +51,7 @@ export async function getPayoutAction(req: Request,res: Response){
 	const {id,action} = req.params;
 	if (action === 'accept'){
 		const payoutDetails= await getPayoutByID(parseInt(id));
-		const userDetails = await getUserByName(req.user!.name);
+		const userDetails = await getUserByID(payoutDetails.user_id);
 		const newUserBalance = parseInt(userDetails.balance) - parseInt(payoutDetails.amount);
 		await updateUserBalance(req.user!.name, newUserBalance);
 		await deletePayoutRequest(parseInt(id));
@@ -63,4 +63,23 @@ export async function getPayoutAction(req: Request,res: Response){
 		throw new Error('unknown payout action type');
 	}
 	res.redirect('/admin/payouts');
+}
+
+export async function getUsers(req: Request,res: Response){
+	const allUsers = await getAllUsers();
+	res.render('admin/users',{user: req.user, allUsers});
+}
+
+export async function getToggleAdmin(req: Request,res: Response){
+	const {id} = req.params;
+	const user = await getUserByID(id);
+	await updateUserAdmin(user.name, !user.admin);
+	res.redirect('/admin/users');
+}
+
+export async function getRemove(req: Request,res: Response){
+	const {id} = req.params;
+	const user = await getUserByID(id);
+	await removeUser(user.name);
+	res.redirect('/admin/users');
 }

@@ -58,13 +58,13 @@ export async function postRegister(req: Request,res: Response){
 		const {name,password} = req.body;
 		const user = await getUserByName(name);
 		if(user !== undefined){
-			// user not found with this name
+			// existing user found with this name
 			res.sendStatus(403);
 			return;
 		}
 		const hashedPassword = await bcrypt.hash(password,10);
 		await addUser(name, hashedPassword);
-		res.sendStatus(200);
+		res.redirect('/auth');
 	}
 	catch(err){
 		errorHandler(req,res,err);
