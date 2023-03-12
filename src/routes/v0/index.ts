@@ -54,5 +54,8 @@ router.get('/admin/payouts', requireAdminAuth, (req,res)=>{
 	admin.getPayouts(req,res);
 });
 
+router.get('/admin/payout/:id/:action', requireAdminAuth, (req,res)=>{
+	admin.getPayoutAction(req,res);
+});
 
 export default router;

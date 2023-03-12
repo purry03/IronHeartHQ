@@ -49,7 +49,7 @@ http.listen(config.PORT || 80,()=>{
 
 
 const io = new Server(http, {});
-const logFile = path.join(__dirname,'..','application.log')
+const logFile = path.join(__dirname,'..','application.log');
 const tail = new Tail(logFile);
 let socket: Socket|null = null;
 

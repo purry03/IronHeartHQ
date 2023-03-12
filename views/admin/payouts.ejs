@@ -34,7 +34,7 @@
                 <td><%=payout.timeAgo%></td>
                 <td><%=payout.name%></td>
                 <td><%=payout.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")%></td>
-                <td><button>Approve</button> <button>Reject</button></td>
+                <td><a href="/admin/payout/<%=payout.id%>/accept"><button>Accept</button></a> <a href="/admin/payout/<%=payout.id%>/reject"><button>Reject</button></a></td>
             </tr>
             <%}%>
             </tbody>    

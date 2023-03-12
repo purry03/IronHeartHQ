@@ -27,3 +27,10 @@ export async function addPayoutRequest(userId: number, amount: number){
 	await database.query(text,values);
 	return;
 }
+
+export async function deletePayoutRequest(id: number){
+	const text = 'DELETE FROM payouts WHERE id = $1';
+	const values = [id];
+	await database.query(text,values);
+	return;
+}

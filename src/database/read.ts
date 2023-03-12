@@ -23,12 +23,12 @@ export async function getAllTransactions(): Promise<Transaction[]>{
 export async function getAllTransactionsByName(username: string): Promise<Transaction[]>{
 	const text = 'SELECT transactions."createdAt", name, operation, amount FROM transactions INNER JOIN users ON transactions.user_id = users.id WHERE name=$1 ORDER BY transactions."createdAt" DESC';
 	const values = [username.toUpperCase()];
-	const transactions = await (await database.query(text,values)).rows;
+	const transactions = (await database.query(text,values)).rows;
 	return transactions;
 }
 
 export async function getAllPayouts(): Promise<Payout[]>{
-	const text = 'SELECT payouts."createdAt", name, amount, balance FROM payouts INNER JOIN users ON payouts.user_id = users.id ORDER BY payouts."createdAt" DESC';
+	const text = 'SELECT payouts.id, payouts."createdAt", name, amount, balance FROM payouts INNER JOIN users ON payouts.user_id = users.id ORDER BY payouts."createdAt" DESC';
 	const payouts = await (await database.query(text)).rows;
 	return payouts;
 }
@@ -38,4 +38,12 @@ export async function getAllPayoutsByName(username: string): Promise<Payout[]>{
 	const values = [username.toUpperCase()];
 	const payouts = await (await database.query(text,values)).rows;
 	return payouts;
+}
+
+
+export async function getPayoutByID(id: number): Promise<Payout>{
+	const text = 'SELECT * FROM payouts WHERE id = $1';
+	const values = [id];
+	const payout = (await database.query(text, values)).rows[0];
+	return payout;
 }
