@@ -58,6 +58,7 @@ export async function postRegister(req: Request,res: Response){
 		const {name,password,password2,accessKey} = req.body;
 		if(password !== password2){
 			res.render('auth/register',{error: 'entered passwords do not match'});
+			return;
 		}
 		const user = await getUserByName(name);
 		if(user !== undefined){
