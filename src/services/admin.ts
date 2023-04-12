@@ -55,6 +55,7 @@ export async function getPayoutAction(req: Request,res: Response){
 		const newUserBalance = parseInt(userDetails.balance) - parseInt(payoutDetails.amount);
 		await updateUserBalance(req.user!.name, newUserBalance);
 		await deletePayoutRequest(parseInt(id));
+		await addTransaction(parseInt(payoutDetails.user_id),'debit',parseInt(payoutDetails.amount));
 	}
 	else if (action === 'reject'){ 
 		await deletePayoutRequest(parseInt(id));

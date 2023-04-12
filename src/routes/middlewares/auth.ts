@@ -26,12 +26,12 @@ export async function requireUserAuth(req: Request, res: Response, next: NextFun
 			next();
 		}
 		else{
-			res.redirect('/auth/signin');
+			res.redirect('/auth');
 		}
 	}
 	else{
 		// redirect to login page
-		res.redirect('/auth/signin');
+		res.redirect('/auth');
 	}
 }
 

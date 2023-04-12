@@ -8,6 +8,11 @@ export async function getIndex(req: Request,res: Response){
 	res.render('user/index',{user});
 }
 
+export async function get501(req: Request,res: Response){
+	const user = await getUserByName(req.user!.name);
+	res.render('error/501',{user});
+}
+
 export async function getWalletHistory(req: Request,res: Response){
 	const transactions = await getAllTransactionsByName(req.user!.name);
 	transactions.forEach(transaction => {

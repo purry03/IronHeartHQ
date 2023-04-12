@@ -6,6 +6,10 @@ import { requireAdminAuth, requireUserAuth } from '../middlewares/auth';
 
 const router = express.Router();
 
+router.get('/501',(req,res)=>{
+	user.get501(req,res);
+});
+
 router.get('/auth',(req,res)=>{
 	auth.getIndex(req,res);
 });
